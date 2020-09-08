@@ -12,7 +12,7 @@ const User = require('../../models/User');
 router.get(
     '/register', 
     validateUser, 
-    (req, res) => {
+    async (req, res) => {
         try {
             //req.userData is defined by the validation middleware
             const newUser = await User.create(req.userData);
