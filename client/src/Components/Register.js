@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Register() {
+    const rootRoute = window.location.origin;
     return (
         <div>
             <h1>
