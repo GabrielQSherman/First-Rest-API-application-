@@ -1,18 +1,21 @@
-import React from 'react'
+
+import React from 'react';
 
 export default function Register() {
-    const rootRoute = window.location.origin;
+
+    const loginLink = window.location.origin + '/login';
+
     return (
         <div>
             <h1>
-                Register Today!
+                Register Today
             </h1>
-            <a 
-                href={rootRoute+'/login'}
-            > 
-                Login If You Have An Account
+            <br/>
+            <a
+                href={loginLink}
+            >
+                Already Have An Account? Login
             </a>
-
         </div>
     )
 }

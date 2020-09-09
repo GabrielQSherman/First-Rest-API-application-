@@ -1,4 +1,4 @@
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function AppRouter() {
     return (
-        <div style={{ width: "100%" }}>
+        <div>
             <Switch>
                 <Route path="/" exact>
                     <Home />
@@ -19,5 +19,3 @@ export default function AppRouter() {
                 </Route>
             </Switch>
         </div>
-    )
-}

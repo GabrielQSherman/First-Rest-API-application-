@@ -1,3 +1,4 @@
+
 # User-System Client Side
 ### I used npx create-react-app to create this React client side
 
@@ -18,5 +19,3 @@
         [] Create JSX 
         [] Create Reducers
         [] Create Actions
-
-*not commiting public folder
