@@ -19,3 +19,5 @@ export default function AppRouter() {
                 </Route>
             </Switch>
         </div>
+    )
+}
