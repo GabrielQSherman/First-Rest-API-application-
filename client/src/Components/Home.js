@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import Button from './Button';
+
 export default function Home() {
 
     const loginLink = window.location.origin + '/login';
@@ -12,17 +14,23 @@ export default function Home() {
                 Welcome To Our Service
             </h1>
             <br/>
-            <a
-                href={loginLink}
-            >
-                Login
-            </a>
+
+            <Button
+            
+            onClick= {() => {window.location = loginLink}}
+            text='Login To Your Account'
+            style={{color: 'white', backgroundColor: 'black'}}
+
+            />
+
             <br/>
-            <a
-                href={regLink}
-            >
-                Register
-            </a>
+            <Button
+            
+            onClick= {() => {window.location = regLink}}
+            text='Create An Account'
+            style={{color: 'white', backgroundColor: 'green'}}
+
+            />
         </div>
     )
 }

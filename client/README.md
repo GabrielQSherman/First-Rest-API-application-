@@ -23,11 +23,12 @@
             [] Implement event listner for login button
             [] set up xhr (using axios)
 
-    [] Create a landing/home page
+    [*] Create a landing/home page
         [*] Basic component structure
-        [] Create JSX 
+        [*] Create JSX 
             [*] Basic JSX Structure
-
+            [*] Conver links, to buttons
+    [*] Create Button Component
 
 
     <!-- Redux Items

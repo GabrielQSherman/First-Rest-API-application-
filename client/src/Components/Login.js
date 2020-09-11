@@ -11,11 +11,13 @@ export default function Login() {
                 Login To Your Account
             </h1>
             <br/>
-            <a
-                href={regLink}
-            >
-                Need An Account? Register Today!
-            </a>
+            <Button
+            
+            onClick= {() => {window.location = regLink}}
+            text='Need An Account? Register Today!'
+            style={{color: 'white', backgroundColor: 'green'}}
+
+            />
         </div>
     )
 }

@@ -11,11 +11,13 @@ export default function Register() {
                 Register Today
             </h1>
             <br/>
-            <a
-                href={loginLink}
-            >
-                Already Have An Account? Login
-            </a>
+            <Button
+            
+            onClick= {() => {window.location = loginLink}}
+            text='Already Have An Account? Login'
+            style={{color: 'white', backgroundColor: 'black'}}
+
+            />
         </div>
     )
 }
