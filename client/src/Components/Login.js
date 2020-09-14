@@ -1,9 +1,10 @@
 
 import React from 'react';
+import Button from './Button'
 
 export default function Login() {
 
-    const regLink = window.location.origin + '/register';
+    const regLink = 'register';
 
     return (
         <div>
