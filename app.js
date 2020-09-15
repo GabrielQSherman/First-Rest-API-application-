@@ -9,7 +9,9 @@ app = express();
 const 
 userRouter = require('./api/routes/userRouter');
 //MIDDLEWARES
-
+const 
+morgan = require('morgan'),
+cors = require('cors');
 //ENV CONTANTS
 const 
 PORT = process.env.PORT || 3000, //Port number for server to listen on, defined in enviorment file
@@ -22,7 +24,9 @@ const mongoConnect = require('./database/mongo-connect');
    It is best practice to have all middlewares that run on all routes and all paths to go before specific routes. 
    This is because typically the specific routes will rely on one or more of the middlewares that run on all routes.
 */
-
+app.use(cors())
+app.use(express.json())
+app.use(morgan('dev'))
 //homepage route
 app.use('/user', userRouter);
 
