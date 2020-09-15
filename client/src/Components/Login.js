@@ -1,6 +1,10 @@
 
 import React from 'react';
-import Button from './Button'
+import Button from './Button';
+
+import Form from './Form';
+import { loginInputs } from '../utils/userInputs'
+import { loginReq } from '../utils/userRequests'
 
 export default function Login() {
 
@@ -12,6 +16,14 @@ export default function Login() {
                 Login To Your Account
             </h1>
             <br/>
+
+            <Form 
+                id='loginForm'
+                inputs={loginInputs}
+                title='Login!'
+                submitFunc={loginReq}
+            />
+
             <Button
             
             onClick= {() => {window.location = regLink}}
