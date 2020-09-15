@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const validator = require("validator");
+const bcrypt = require('bcrypt')
 
 const msgs = {
     emailInUse: 'Email Already In Use',
@@ -39,12 +40,12 @@ const validate = async (req, res, next) => {
         })
     }
 
-    if (username == undefined || username.trim().length == 0 || !validator.isLength(username, { min: 3, max: 21 })) {
+    if (u == undefined || u.trim().length == 0 || !validator.isLength(u, { min: 3, max: 21 })) {
         failedValues.push({
             key: "username",
             message: msgs.legthInvalid('Username')
         })
-    } else if ( !validator.isAlphanumeric(username, 'en-US') ) {
+    } else if ( !validator.isAlphanumeric(u, 'en-US') ) {
 
         failedValues.push({
             key: "username",
@@ -60,7 +61,7 @@ const validate = async (req, res, next) => {
         })
     }
 
-    if ( !validator.isLength(pass, { min: 7, max: 1000 }) ) {
+    if ( !validator.isLength(p, { min: 7, max: 1000 }) ) {
         failedValues.push({
             key: "password",
             message: msgs.legthInvalid('Password')
@@ -75,10 +76,12 @@ const validate = async (req, res, next) => {
             })
     } else {
 
+        const encryptedPass = await bcrypt.hash(p, 10);
+
         req.userData = {
             email: e,
             username: u,
-            password: p,
+            password: encryptedPass,
         }
         next()
 
