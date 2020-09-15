@@ -7,13 +7,14 @@ const failedLogin = ( req, res) => {
 }
 
 module.exports = async (req, res, next) => {
-
-    const { credential: c, password: p } = req.body;
-
-    c = c.trim().toLowerCase();
-    p = p.trim();
-
+    
     try {
+    
+    const { credential, password } = req.body;
+
+    c = credential.trim().toLowerCase();
+    p = password.trim();
+
         const 
         query = {}, 
         field = validator.isEmail(c) ? 'email' : 'username'; 
