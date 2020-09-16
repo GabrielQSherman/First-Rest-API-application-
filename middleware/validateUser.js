@@ -16,6 +16,10 @@ const validate = async (req, res, next) => {
 
     const { email: e, password: p, username: u } = req.body;
 
+    if ( e == undefined || p == undefined || u == undefined ) {
+        return res.status(400).json({error: 'One or more required values are missing.'})
+    }
+
     failedValues = [];
 
     if (!validator.isEmail(e)) {
