@@ -18,22 +18,38 @@ module.exports = {
 
     //frontend validation needed:
     // [] make sure all feilds are present,
-    if (Object.keys(reqBody).length != 2) {
+    if (Object.keys(reqBody).length !== 2) {
       return alert('You forgot to fill something out')
     } 
     // [] lengths of inputs (match schema)
 
     const loginURL = `${baseURL}/user/login`; 
 
-    axios.put(loginURL, reqBody)
-    .then( res => {
-      console.log(res);
+    fetch(loginURL, {
+        method: "PUT",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
     })
-    .catch( err => {
-      if (err) {
-        console.log(err);
-      }
+    .then(rs => { 
+      console.log(rs);
+      return rs.json()
     })
+    .then(res => {
+      console.log(res)
+    })
+
+    // axios.put(loginURL, reqBody)
+    // .then( res => {
+    //   console.log(res);
+    // })
+    // .catch( err => {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    // })
 
   },
 
@@ -53,13 +69,13 @@ module.exports = {
 
     //frontend validation needed:
     // [*] make sure all feilds are present,
-    if (Object.keys(reqBody).length != 4) {
+    if (Object.keys(reqBody).length !== 4) {
       return alert('You forgot to fill something out')
     } 
     // [] lengths of inputs (match schema)
     //all validation from before, 
     // [*] plus make sure both password inputs match
-    if (reqBody.password != reqBody.password2) {
+    if (reqBody.password !== reqBody.password2) {
       return alert('Passwords do not match')
     }
 
