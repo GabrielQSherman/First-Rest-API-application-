@@ -1,19 +1,19 @@
 const {default: axios} = require('axios');
 const baseURL = 'http://localhost:4000';
+const isEmpty = require('./isEmpty');
 
 module.exports = {
   loginReq: (form) => {
-
-    const reqBody = {};
-
+    const 
+      reqBody = {},
+      failedValues = [];
     for (const input of form) {
-      
-      const val = input.value;
-
-      if (val !== '') {
+      const val = input.value.trim();
+      if (!isEmpty(val)) {
         reqBody[input.name] = val
+      } else {
+        failedValues.push({key: input.name, error: `${input.name} Is Required`})
       }
-    
     }
 
     //frontend validation needed:
