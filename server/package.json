@@ -4,7 +4,9 @@
   "description": "Rest API that will allow registration and loging in to a public client",
   "main": "server.js",
   "scripts": {
-    "start": "npm run dev",
+    "start": "npm run full",
+    "full": "concurrently \"npm run dev\" \"npm run client\"",
+    "client": "cd ../client && npm start",
     "dev": "nodemon server.js",
     "pro": "node server.js"
   },
