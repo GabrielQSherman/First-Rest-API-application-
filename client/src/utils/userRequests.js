@@ -1,4 +1,5 @@
 const {default: axios} = require('axios');
+const {default: val} = require('validator')
 const baseURL = 'http://localhost:4000';
 const isEmpty = require('./isEmpty');
 
@@ -16,12 +17,9 @@ module.exports = {
       }
     }
 
-    //frontend validation needed:
-    // [] make sure all feilds are present,
-    if (Object.keys(reqBody).length !== 2) {
-      return alert('You forgot to fill something out')
-    } 
     // [] lengths of inputs (match schema)
+    if (!isEmpty(reqBody.email) && !val.isEmail(reqBody.email)) failedValues.push({key: 'email', error: 'Email Invalid'})
+
 
     const loginURL = `${baseURL}/user/login`; 
 
