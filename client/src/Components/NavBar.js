@@ -1,14 +1,17 @@
 import React from 'react'
 import Button from './Button';
 
-import useTheme from '../Hooks/useTheme';
+// import useTheme from '../Hooks/useTheme';
+
+import { useTheme, useThemeUpdate} from '../Hooks/ThemeContext';
 
 const loginLink = 'login';
 const regLink = 'register';
 
 export default function NavBar() {
   
-  const [dm, toggleDm] = useTheme(true);
+  const dm = useTheme();
+  const toggleTheme = useThemeUpdate();
   return (
     <div
       style={{
@@ -37,10 +40,7 @@ export default function NavBar() {
         text='Login To Your Account'
       />
       <Button 
-        onClick= {() => {
-          toggleDm( prvDm => {return !prvDm});  
-          // window.location.reload() //It would be prefered to have components automatically rerender rather than have the page reload 
-        }}
+        onClick= {toggleTheme}
         text= { dm ? 'Turn On Light Mode' : 'Turn On Dark Mode'}
         style= {{marginRight: 30}}
       />
