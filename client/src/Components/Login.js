@@ -5,14 +5,20 @@ import Button from './Button';
 import Form from './Form';
 import { loginInputs } from '../utils/userInputs'
 import { loginReq } from '../utils/userRequests'
+import useTheme from '../Hooks/useTheme';
 
 export default function Login() {
 
     const regLink = 'register';
+    const [dm] = useTheme(false);
 
     return (
         <div>
-            <h1>
+            <h1
+                style={{
+                    color: !dm ? 'black' : 'white',
+                }}
+            >
                 Login To Your Account
             </h1>
             <br/>
