@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react'
-
-import useTheme from '../Hooks/useTheme';
+import React from 'react';
+import { useTheme} from '../Hooks/ThemeContext';
 
 export default function Button(props) {
   
-  const [dm] = useTheme(false);
+  const dm = useTheme();
 
   const buttonStyle = {
     padding: 10,

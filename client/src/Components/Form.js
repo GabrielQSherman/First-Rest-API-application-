@@ -1,7 +1,7 @@
 import React from 'react'
 import Input from './Input'
 import Button from './Button'
-import useTheme from '../Hooks/useTheme';
+import { useTheme} from '../Hooks/ThemeContext';
 
 export default function Form(props) { //inputs=Array(of Objs.), title=String, submitFunc=Function
   
@@ -9,7 +9,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
     props.submitFunc(document.getElementById(props.id))
   }
 
-  const [dm] = useTheme(false);
+  const dm = useTheme();
 
   return (
     <div>
