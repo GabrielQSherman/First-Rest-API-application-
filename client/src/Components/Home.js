@@ -1,37 +1,28 @@
 
 import React from 'react';
-
-import Button from './Button';
+import useTheme from '../Hooks/useTheme';
 
 export default function Home() {
 
-    const loginLink = 'login';
-    const regLink = 'register';
+    const [dm] = useTheme(false);
 
-    
     return (
         <div>
-            <h1>
+            <h1
+                style={{
+                    color: !dm ? 'black' : 'white',
+                }}            
+            >
                 Welcome To Our Service
             </h1>
             <br/>
-
-            <Button
-            
-            onClick= {() => {window.location = loginLink}}
-            text='Login To Your Account'
-            style={{color: 'white', backgroundColor: 'black'}}
-
-            />
-
-            <br/>
-            <Button
-            
-            onClick= {() => {window.location = regLink}}
-            text='Create An Account'
-            style={{color: 'white', backgroundColor: 'green'}}
-
-            />
+            <p
+                style={{
+                    color: !dm ? 'black' : 'white',
+                }}            
+            >
+                This is some filler homepage text
+            </p>
         </div>
     )
 }
