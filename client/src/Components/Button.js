@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import useTheme from '../Hooks/useTheme';
 
@@ -9,6 +9,7 @@ export default function Button(props) {
   const buttonStyle = {
     padding: 10,
     borderRadius: 5,
+    border: 'none',
     fontSize: 'large',
     backgroundColor: dm ? '#333' : 'lightblue',
     color: dm ? 'white' : 'deeppink',

@@ -11,7 +11,6 @@ export default function useTheme(initVal) {
 
     set('theme', JSON.stringify(dm))
     document.getElementById('root').style.backgroundColor = dm ? '#333': 'white';
-
   }, [dm])
 
 

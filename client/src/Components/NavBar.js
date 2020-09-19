@@ -9,7 +9,6 @@ const regLink = 'register';
 export default function NavBar() {
   
   const [dm, toggleDm] = useTheme(true);
-  
   return (
     <div
       style={{
@@ -38,7 +37,10 @@ export default function NavBar() {
         text='Login To Your Account'
       />
       <Button 
-        onClick= {() => {toggleDm( prvDm => {return !prvDm})}}
+        onClick= {() => {
+          toggleDm( prvDm => {return !prvDm});  
+          // window.location.reload() //It would be prefered to have components automatically rerender rather than have the page reload 
+        }}
         text= { dm ? 'Turn On Light Mode' : 'Turn On Dark Mode'}
         style= {{marginRight: 30}}
       />

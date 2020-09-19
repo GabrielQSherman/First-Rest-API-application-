@@ -4,7 +4,7 @@ module.exports = {
 
     if (saved !== undefined) return saved
     
-    if (initVal instanceof Function) return initVal
+    if (initVal instanceof Function) return initVal()
     return initVal
 
   },
