@@ -1,6 +1,7 @@
 import React from 'react'
 import Input from './Input'
 import Button from './Button'
+import useTheme from '../Hooks/useTheme';
 
 export default function Form(props) { //inputs=Array(of Objs.), title=String, submitFunc=Function
   
@@ -8,9 +9,16 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
     props.submitFunc(document.getElementById(props.id))
   }
 
+  const [dm] = useTheme(false);
+
   return (
     <div>
-      <h2>
+      <h2
+        style = {{
+          borderRaidus: 15,
+          color: !dm ? 'black' : 'white',
+        }}
+      >
         {props.title}
       </h2>
       <form 
@@ -21,6 +29,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
           ? props.inputs.map( inProps => {
             return (
               <Input
+                key={inProps.name}
                 name={inProps.name}
                 ph={inProps.ph}
                 type={inProps.type}
