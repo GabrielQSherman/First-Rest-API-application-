@@ -1,16 +1,17 @@
 
 import React from 'react';
-import Button from './Button';
 
-import Form from './Form';
+import { useTheme} from '../Hooks/ThemeContext';
 import { loginInputs } from '../utils/userInputs'
 import { loginReq } from '../utils/userRequests'
-import useTheme from '../Hooks/useTheme';
+
+import Button from './Button';
+import Form from './Form';
 
 export default function Login() {
 
     const regLink = 'register';
-    const [dm] = useTheme(false);
+    const dm = useTheme();
 
     return (
         <div>

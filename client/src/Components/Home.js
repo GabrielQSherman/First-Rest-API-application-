@@ -1,12 +1,11 @@
 
-import React, {useEffect, useContext} from 'react';
-import useTheme from '../Hooks/useTheme';
+import React from 'react';
+import { useTheme} from '../Hooks/ThemeContext';
 
 export default function Home() {
 
-    const [dm] = useTheme();
+    const dm = useTheme();
 
-    
     return (
         <div>
             <h1
