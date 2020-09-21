@@ -4,20 +4,14 @@ const { get, set} = require('../utils/localStorage');
 
 export default function useCountVisits(initVal) {
 
-  console.log(initVal);
-
-  const [visits, setVisits] = useState( () => {
+  let [visits, setVisits] = useState( () => {
     return get('visits', initVal)    
   })
 
-
+  visits+=1
   useEffect(() => {
-
     set('visits', JSON.stringify(visits))
-    console.log(`You visited ${visits} pages`);
-
-  }, [visits])
-
+  })
 
   return [visits, setVisits]
 }
