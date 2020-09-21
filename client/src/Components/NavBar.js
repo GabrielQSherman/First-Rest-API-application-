@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Button from './Button';
 
-// import useTheme from '../Hooks/useTheme';
-
 import { useTheme, useThemeUpdate} from '../Hooks/ThemeContext';
+import useCountVists from '../Hooks/useCountVisits';
 
 const loginLink = 'login';
 const regLink = 'register';
@@ -12,6 +11,13 @@ export default function NavBar() {
   
   const dm = useTheme();
   const toggleTheme = useThemeUpdate();
+    
+  const [visits, setVisits] = useCountVists(0)
+
+  useEffect( () => {   
+      console.log(`You visited ${visits} pages`);
+  })
+
   return (
     <div
       style={{
@@ -42,8 +48,13 @@ export default function NavBar() {
       <Button 
         onClick= {toggleTheme}
         text= { dm ? 'Turn On Light Mode' : 'Turn On Dark Mode'}
+      />
+      <Button 
+        onClick= {() => {setVisits(0)}}
+        text= { `Reset Page Count: (${visits})`}
         style= {{marginRight: 30}}
       />
+
 
     </div>
   )
