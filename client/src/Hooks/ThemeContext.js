@@ -22,7 +22,7 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
 
     set('theme', JSON.stringify(dm))
-    document.getElementById('root').style.backgroundColor = dm ? '#333': 'white';
+    document.getElementById('root').style.backgroundColor = dm ? '#333': 'antiquewhite';
   }, [dm])
 
   const toggleDM = () => {

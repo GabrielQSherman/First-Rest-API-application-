@@ -20,22 +20,23 @@ export default function Login() {
                     color: !dm ? 'black' : 'white',
                 }}
             >
-                Login To Your Account
+                Login
             </h1>
             <br/>
 
             <Form 
                 id='loginForm'
                 inputs={loginInputs}
-                title='Login!'
+                title='Login To Your Account'
                 submitFunc={loginReq}
+                submitText='Submit Login'
             />
 
             <Button
             
             onClick= {() => {window.location = regLink}}
             text='Need An Account? Register Today!'
-            style={{color: 'white', backgroundColor: 'green'}}
+            style={{color: dm ? 'white' : 'purple', backgroundColor: dm ? '#222' : 'lightgreen'}}
 
             />
         </div>
