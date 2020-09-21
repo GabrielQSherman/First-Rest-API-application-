@@ -17,10 +17,9 @@ export default function Button(props) {
 
   return (
     <button
-    
+    className='dynamicBtn'
     style={{...buttonStyle, ...props.style}}
     onClick={props.onClick}
-    
     >
       {props.text}
     </button>

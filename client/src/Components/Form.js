@@ -11,6 +11,33 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
 
   const dm = useTheme();
 
+  const defaultStyles = {
+    form: {
+      backgroundColor: dm ? '#444' : 'lightpink',
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '30%',
+      marginTop: '1%',
+      marginBottom: '3%',
+      padding: '2%',
+      borderRadius: 25,
+    },
+    input: {
+      margin: '1%',
+      marginLeft: '20%',
+      marginRight: '20%',
+      fontSize: 'large',
+      textAlign: 'center',
+    },
+    submitBtn: {
+      fontSize: '2em',
+      marginBottom: '3%',
+      padding: '20px 70px',
+      borderRadius: 35,
+      backgroundColor: dm ? '#555' : 'lightblue',
+    },
+  } 
+
   return (
     <div>
       <h2
@@ -23,6 +50,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       </h2>
       <form 
         id={props.id}
+        style={{...defaultStyles.form, ...props.style, color: 'honeydew'}}
       >
         {
           Array.isArray(props.inputs) 
@@ -33,7 +61,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
                 name={inProps.name}
                 ph={inProps.ph}
                 type={inProps.type}
-                style={inProps.style}
+                style={{...defaultStyles.input, ...inProps.style}}
                 id={inProps.id}
                 onChange={inProps.onChange}
               />
@@ -44,8 +72,9 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
 
       </form>
       <Button 
-        text='Submit'
+        text={props.submitText}
         onClick={buttonOnClick}
+        style={{...defaultStyles.submitBtn}}
       />
   
     </div>
