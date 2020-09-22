@@ -48,6 +48,7 @@ module.exports = async (req, res, next) => {
         }
 
         req.id = user._id;
+        req.username = user.username;
 
         next() //if code execution reaches here, it is assumed the user has successfully logged in
         
