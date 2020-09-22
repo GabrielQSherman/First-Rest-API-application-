@@ -3,6 +3,7 @@ const router = require('express').Router();
 const validateUser = require('../../middleware/validateUser');
 const checkUserCreds = require('../../middleware/checkUserCreds');
 const createJWT = require('../../middleware/createJWT');
+const createUser = require('../../middleware/createUser');
 
 const User = require('../../models/User');
 
@@ -12,11 +13,11 @@ const User = require('../../models/User');
 router.post(
     '/register', 
     validateUser, 
+    createUser,
     async (req, res) => {
         try {
             //req.userData is defined by the validation middleware
-            const newUser = await User.create(req.userData);
-            res.status(201).json(newUser);
+            res.status(201).json({token: req.token, username: req.username});
 
         } catch (err) {
             res.status(500).json({
@@ -37,7 +38,7 @@ router.put(
     createJWT,
     (req, res) => {
         try {
-            res.json(req.token);
+            res.json({token: req.token, username: req.username});
         } catch (err) {
             res.status(500).json({
                 message: err.message,
