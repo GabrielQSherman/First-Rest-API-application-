@@ -4,7 +4,7 @@ const baseURL = 'http://localhost:4000';
 const isEmpty = require('./isEmpty');
 
 module.exports = {
-  loginReq: (form) => {
+  loginReq: async (form) => {
     const 
       reqBody = {},
       failedValues = [];
@@ -31,7 +31,8 @@ module.exports = {
             const password = reqBody.password;
                 if ( password.length < 7 ) failedValues.push({key: 'password', error: 'Password Needs To Be At Least 7 Characters'})
                 if ( password.length > 1000 ) failedValues.push({key: 'password', error: 'Password Needs To Be Shorter Than 1000 Characters'})
-            break;         
+            break;  
+          default:       
         }
       } else {
 
@@ -46,35 +47,37 @@ module.exports = {
 
     const loginURL = `${baseURL}/user/login`; 
 
-    fetch(loginURL, {
-        method: "PUT",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(reqBody)
-    })
-    .then(rs => { 
-      console.log(rs);
-      return rs.json()
-    })
-    .then(res => {
-      console.log(res)
-    })
-
-    // axios.put(loginURL, reqBody)
-    // .then( res => {
-    //   console.log(res);
+    // return fetch(loginURL, {
+    //     method: "PUT",
+    //     mode: "cors",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(reqBody)
     // })
-    // .catch( err => {
-    //   if (err) {
-    //     console.log(err);
+    // .then(rs => { 
+    //   console.log(rs);
+      
+    //   if (rs.status === 200) {
+    //     alert("You've successully logged in")
     //   }
+
+    //   return rs.json()
+    // })
+    // .then(res => {
+    //   console.log(res)
+      
+    // })
+    // .finally( (res) => {
+    //   return res.username
     // })
 
+    const user = await axios.put(loginURL, reqBody).then(response => response.data)
+    
+    return user
   },
 
-  regReq: (form) => {
+  regReq: async (form) => {
 
     const reqBody = {};
 
@@ -102,7 +105,7 @@ module.exports = {
 
     const regURL = `${baseURL}/user/register`; 
 
-    axios.post(regURL, reqBody)
+    const user = await axios.post(regURL, reqBody)
     .then( res => {
       console.log(res);
     })
@@ -111,5 +114,6 @@ module.exports = {
         console.log(err); 
       }
     })
+    return user
   }
 }

@@ -4,11 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 
 import AppRouter from './AppRouter';
 
+import { ThemeProvider } from '../Hooks/ThemeContext'
+
+
 function App() {
   return (
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
+    <ThemeProvider >
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
