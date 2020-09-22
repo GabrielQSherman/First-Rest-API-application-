@@ -12,7 +12,7 @@ export default function NavBar() {
   const [visits, setVisits] = useCountVists(0)
 
   useEffect( () => {   
-      console.log(`You visited ${visits} pages`);
+      // console.log(`You visited ${visits} pages`);
   })
 
   let firstBtn = true;
@@ -32,18 +32,20 @@ export default function NavBar() {
       >
 
       {
-        navButtons.map( (btn) => {
+        navButtons.map( (btn, index) => {
           if (btn.location !== `${window.location}`) {
             const btnStyle = firstBtn ? {...btn.style, marginLeft: 130} : {...btn.style};
             firstBtn = false
             return (
               <Button
+                key={index} //add key prop. to each btn to avoid React warning
                 onClick= {() => {window.location = btn.location}}
                 text={btn.text}
                 style={btnStyle}
               />
             )
           }
+          return null//return null to avoid React warning
         })
       }
    

@@ -6,7 +6,8 @@ import { useTheme} from '../Hooks/ThemeContext';
 export default function Form(props) { //inputs=Array(of Objs.), title=String, submitFunc=Function
   
   const buttonOnClick = () => {
-    props.submitFunc(document.getElementById(props.id))
+    const user = props.submitFunc(document.getElementById(props.id))
+    console.log(user);
   }
 
   const dm = useTheme();
