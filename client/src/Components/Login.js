@@ -7,21 +7,22 @@ import { loginReq } from '../utils/userRequests'
 
 import Button from './Button';
 import Form from './Form';
+import Text from './Text';
 
 export default function Login() {
 
     const regLink = 'register';
-    const dm = useTheme();
+    const theme = useTheme();
 
     return (
         <div>
-            <h1
+            <Text
                 style={{
-                    color: !dm ? 'black' : 'white',
+                    color: !theme ? 'black' : 'white',
                 }}
-            >
-                Login
-            </h1>
+                tag='h1'
+                text='Login'
+            />
             <br/>
 
             <Form 
@@ -36,7 +37,7 @@ export default function Login() {
             
             onClick= {() => {window.location = regLink}}
             text='Need An Account? Register Today!'
-            style={{color: dm ? 'white' : 'purple', backgroundColor: dm ? '#222' : 'lightgreen'}}
+            style={{color: theme ? 'white' : 'purple', backgroundColor: theme ? '#222' : 'lightgreen'}}
 
             />
         </div>

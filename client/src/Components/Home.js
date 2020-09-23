@@ -1,28 +1,29 @@
 
 import React from 'react';
 import { useTheme} from '../Hooks/ThemeContext';
+import Text from './Text';
 
 export default function Home() {
 
-    const dm = useTheme();
+    const theme = useTheme();
 
     return (
         <div>
-            <h1
+            <Text
                 style={{
-                    color: !dm ? 'black' : 'white',
-                }}            
-            >
-                Welcome To Our Service
-            </h1>
+                    color: !theme ? 'black' : 'white',
+                }}
+                tag='h1'
+                text='Welcome To Our Service'            
+            />
             <br/>
-            <p
+            <Text
                 style={{
-                    color: !dm ? 'black' : 'white',
-                }}            
-            >
-                This is some filler homepage text
-            </p>
+                    color: !theme ? 'black' : 'white',
+                }}
+                tag='p'
+                text='This is some filler homepage text'            
+            />
         </div>
     )
 }

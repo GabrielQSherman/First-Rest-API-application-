@@ -5,21 +5,19 @@ import Form from './Form';
 import { useTheme} from '../Hooks/ThemeContext';
 import { regInputs } from '../utils/userInputs';
 import { regReq } from '../utils/userRequests'
+import Text from './Text';
 
 export default function Register() {
 
     const loginLink = 'login';
-    const dm = useTheme();
+    const theme = useTheme();
 
     return (
         <div>
-            <h1
-                style={{
-                    color: !dm ? 'black' : 'white',
-                }}
-            >
-                Register Today!
-            </h1>
+            <Text
+                tag='h1'
+                text='Register Today!'
+            />
             <br/>
 
             <Form 
@@ -34,7 +32,7 @@ export default function Register() {
             
             onClick= {() => {window.location = loginLink}}
             text='Already Have An Account? Login'
-            style={{color: dm ? 'white' : 'purple', backgroundColor: dm ? '#222' : 'lightgreen'}}
+            style={{color: theme ? 'white' : 'purple', backgroundColor: theme ? '#222' : 'lightgreen'}}
 
             />
         </div>
