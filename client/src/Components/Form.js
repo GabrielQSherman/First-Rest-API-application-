@@ -2,6 +2,7 @@ import React from 'react'
 import Input from './Input'
 import Button from './Button'
 import { useTheme} from '../Hooks/ThemeContext';
+import Text from './Text';
 
 export default function Form(props) { //inputs=Array(of Objs.), title=String, submitFunc=Function
   
@@ -10,11 +11,11 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
     console.log(user);
   }
 
-  const dm = useTheme();
+  const theme = useTheme();
 
   const defaultStyles = {
     form: {
-      backgroundColor: dm ? '#444' : 'lightpink',
+      backgroundColor: theme ? '#444' : 'lightpink',
       display: 'flex',
       flexDirection: 'column',
       margin: '30%',
@@ -35,20 +36,20 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       marginBottom: '3%',
       padding: '20px 70px',
       borderRadius: 35,
-      backgroundColor: dm ? '#555' : 'lightblue',
+      backgroundColor: theme ? '#555' : 'lightblue',
     },
   } 
 
   return (
     <div>
-      <h2
+      <Text
         style = {{
           borderRaidus: 15,
-          color: !dm ? 'black' : 'white',
+          color: !theme ? 'black' : 'white',
         }}
-      >
-        {props.title}
-      </h2>
+        tag='h1'
+        text={props.title}
+      />
       <form 
         id={props.id}
         style={{...defaultStyles.form, ...props.style, color: 'honeydew'}}
