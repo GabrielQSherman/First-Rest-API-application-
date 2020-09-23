@@ -3,11 +3,11 @@ import { useTheme} from '../Hooks/ThemeContext';
 
 export default function Input(props) { //ph, type, onChange, name, id
   
-  const dm = useTheme();
+  const theme = useTheme();
   
   const defaultStyle = {
-    color: dm ? 'white' : 'black',
-    backgroundColor: dm ? '#222' : 'pink',
+    color: theme ? 'white' : 'black',
+    backgroundColor: theme ? '#222' : 'pink',
     border: 'none',
     padding: 10,
     borderRadius: 5,
