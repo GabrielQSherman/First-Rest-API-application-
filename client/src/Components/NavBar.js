@@ -7,7 +7,7 @@ import navButtons from '../utils/navButtons';
 
 export default function NavBar() {
   
-  const dm = useTheme();
+  const theme = useTheme();
   const toggleTheme = useThemeUpdate();
   const [visits, setVisits] = useCountVists(0)
 
@@ -26,7 +26,7 @@ export default function NavBar() {
         paddingBottom: 30,
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: dm ? '#222' : 'pink',
+        backgroundColor: theme ? '#222' : 'pink',
         justifyContent: 'space-between'
       }}
       >
@@ -51,7 +51,7 @@ export default function NavBar() {
    
       <Button 
         onClick= {toggleTheme}
-        text= { dm ? 'Turn On Light Mode' : 'Turn On Dark Mode'}
+        text= { theme ? 'Turn On Light Mode' : 'Turn On Dark Mode'}
       />
       <Button 
         onClick= {() => {setVisits(0)}}
