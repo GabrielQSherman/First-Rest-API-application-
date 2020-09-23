@@ -3,15 +3,15 @@ import { useTheme} from '../Hooks/ThemeContext';
 
 export default function Button(props) {
   
-  const dm = useTheme();
+  const theme = useTheme();
 
   const buttonStyle = {
     padding: 10,
     borderRadius: 5,
     border: 'none',
     fontSize: 'large',
-    backgroundColor: dm ? '#333' : 'lightblue',
-    color: dm ? 'white' : 'deeppink',
+    backgroundColor: theme ? '#333' : 'lightblue',
+    color: theme ? 'white' : 'deeppink',
     cursor: 'pointer',
   }
 
