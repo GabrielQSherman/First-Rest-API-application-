@@ -4,15 +4,15 @@ const baseURL = 'http://localhost:4000';
 const isEmpty = require('./isEmpty');
 
 module.exports = {
-  loginReq: async (form) => {
+  loginReq: async (values) => {
     const 
       reqBody = {},
       failedValues = [];
-    for (const input of form) {
-      const val = input.value.trim();
+    for (const key in values) {
+      const val = values[key].trim();
       if (!isEmpty(val)) {
-        reqBody[input.name] = val
-        switch (input.name) {
+        reqBody[key] = val
+        switch (key) {
           case 'credential':
               if ( !validate.isEmail(val) ) {
                 const username = reqBody.credential;
@@ -36,7 +36,7 @@ module.exports = {
         }
       } else {
 
-        failedValues.push({key: input.name, error: `${input.name} Is Required`})
+        failedValues.push({key: key, error: `${key} Is Required`})
 
       }
     }
@@ -47,46 +47,42 @@ module.exports = {
 
     const loginURL = `${baseURL}/user/login`; 
 
-    // return fetch(loginURL, {
-    //     method: "PUT",
-    //     mode: "cors",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(reqBody)
-    // })
-    // .then(rs => { 
-    //   console.log(rs);
+    return fetch(loginURL, {
+        method: "PUT",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
+    })
+    .then(rs => { 
+      console.log(rs);
       
-    //   if (rs.status === 200) {
-    //     alert("You've successully logged in")
-    //   }
+      if (rs.status === 200) {
+        alert("You've successully logged in")
+      }
 
-    //   return rs.json()
-    // })
-    // .then(res => {
-    //   console.log(res)
+      return rs.json()
+    })
+    .then(res => {
+      console.log(res)
       
-    // })
-    // .finally( (res) => {
-    //   return res.username
-    // })
+    })
 
-    const user = await axios.put(loginURL, reqBody).then(response => response.data)
+    // return await axios.put(loginURL, reqBody).then(response => response.data)
     
-    return user
   },
 
-  regReq: async (form) => {
+  regReq: async (values) => {
 
     const reqBody = {};
 
-    for (const input of form) {
+    for (const key in values) {
       
-      const val = input.value.trim();
+      const val = values[key].trim();
 
       if (val !== '') {
-        reqBody[input.name] = val
+        reqBody[key] = val
       }
     
     }
@@ -114,6 +110,10 @@ module.exports = {
         console.log(err); 
       }
     })
-    return user
+
+    setTimeout(() => {
+
+      return user
+    }, 1000)
   }
 }
