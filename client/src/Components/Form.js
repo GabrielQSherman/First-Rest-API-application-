@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Input from './Input'
 import Button from './Button'
 import { useTheme} from '../Hooks/ThemeContext';
 import Text from './Text';
 
 export default function Form(props) { //inputs=Array(of Objs.), title=String, submitFunc=Function
+
+
+  const initialState = props.inputs.reduce( (intial, input) => {
+    intial[input.name] = ''
+    return intial
+  }, {})
+
+  const [formValues, updateValues] = useState(initialState)
   
   const buttonOnClick = () => {
-    const user = props.submitFunc(document.getElementById(props.id))
+    const user = props.submitFunc(formValues)
     console.log(user);
   }
 
@@ -65,7 +73,13 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
                 type={inProps.type}
                 style={{...defaultStyles.input, ...inProps.style}}
                 id={inProps.id}
-                onChange={inProps.onChange}
+                onChange={ (e) => {
+
+                  const newValue = e.target.value;
+                  const inputName = e.target.name;
+
+                  updateValues( {...formValues, [inputName]: newValue} )
+                }}
               />
             )
           })
