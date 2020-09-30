@@ -14,8 +14,9 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
 
   const [formValues, updateValues] = useState(initialState)
   
-  const buttonOnClick = () => {
-    const user = props.submitFunc(formValues)
+  const buttonOnClick = async () => {
+    updateValues(initialState)
+    const user = await props.submitFunc(formValues)
     console.log(user);
   }
 
@@ -68,6 +69,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
             return (
               <Input
                 key={inProps.name}
+                value={formValues[inProps.name]}
                 name={inProps.name}
                 ph={inProps.ph}
                 type={inProps.type}
