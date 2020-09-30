@@ -5,15 +5,18 @@ import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './AppRouter';
 
 import { ThemeProvider } from '../Hooks/ThemeContext'
+import { UserContextProvider } from '../Hooks/userContext'
 
 
 function App() {
   return (
-    <ThemeProvider >
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
-    </ThemeProvider>
+    <UserContextProvider>
+      <ThemeProvider >
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
+      </ThemeProvider>
+    </UserContextProvider>
   );
 }
 
