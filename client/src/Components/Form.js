@@ -19,13 +19,40 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
   const submitForm = () => {
     
     const { endpoint, method, validation } = props.request;
+    // console.log(endpoint, method, validation);
     
-    console.log(endpoint, method, validation);
+    //reset Error messages
+    props.inputs.forEach( input => {
+      const inputElm = document.getElementById(input.name+'Error')
+      console.log(inputElm);
+      inputElm.style.display = 'none'
+      inputElm.innerText = ''
+    })
 
+    //produce error messages
     const validationErrors = validation(formValues)
+    const errorsObj = {};
+    
+    //check if there are err messages
     if (validationErrors.length !== 0) {
-      //show error messages if there are any
-      console.log(validationErrors);
+      //itterate through errors to produce error strings
+      validationErrors.forEach( err => {
+        if (errorsObj.hasOwnProperty(err.key)) {
+          errorsObj[err.key] = `${errorsObj[err.key]} : ${err.error}` 
+        } else {
+          errorsObj[err.key] = err.error
+        }
+      });
+      
+      //show error messages if there are any to display
+      for (const name in errorsObj) {
+        const errorText = document.getElementById(name+'Error')
+        errorText.style.display = 'initial'
+        errorText.innerText+=errorsObj[name]
+
+      }
+
+      console.log(errorsObj);
     } else {
       //make request with axios
       axios({
@@ -73,6 +100,14 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       borderRadius: 35,
       backgroundColor: theme ? '#555' : 'lightblue',
     },
+    inputErr: {
+      color: theme ? 'yellow' : 'white', 
+      backgroundColor: theme ? '#777' : 'deeppink', 
+      fontWeight: 500, 
+      padding: 3, 
+      borderRadius: 10,
+      display: 'none'
+    }
   } 
 
   return (
@@ -97,11 +132,10 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
                 key={inProps.name+'Wrapper'}
               >
                 <Text 
-                  key={inProps.name+'Error'}
-                  text={inProps.name}
                   tag='h3'
-                  id
-                  style={{color: 'red', fontWeight: 500}}
+                  key={inProps.name+'Error'}
+                  id={inProps.name+'Error'}
+                  style={{...defaultStyles.inputErr}}
                 />
                 <Input
                   key={inProps.name}
