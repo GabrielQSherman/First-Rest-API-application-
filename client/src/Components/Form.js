@@ -20,39 +20,26 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
     
     const { endpoint, method, validation } = props.request;
     // console.log(endpoint, method, validation);
-    
     //reset Error messages
     props.inputs.forEach( input => {
       const inputElm = document.getElementById(input.name+'Error')
-      console.log(inputElm);
+      // console.log(inputElm);
       inputElm.style.display = 'none'
       inputElm.innerText = ''
     })
 
     //produce error messages
-    const validationErrors = validation(formValues)
-    const errorsObj = {};
+    const errorsObj = validation(formValues) //get form values from state
     
-    //check if there are err messages
-    if (validationErrors.length !== 0) {
-      //itterate through errors to produce error strings
-      validationErrors.forEach( err => {
-        if (errorsObj.hasOwnProperty(err.key)) {
-          errorsObj[err.key] = `${errorsObj[err.key]} : ${err.error}` 
-        } else {
-          errorsObj[err.key] = err.error
-        }
-      });
-      
+    //check if there are err messages, validation function should return false if there are none
+    console.log(errorsObj);
+    if (errorsObj) {
       //show error messages if there are any to display
       for (const name in errorsObj) {
         const errorText = document.getElementById(name+'Error')
         errorText.style.display = 'initial'
         errorText.innerText+=errorsObj[name]
-
       }
-
-      console.log(errorsObj);
     } else {
       //make request with axios
       axios({
@@ -63,11 +50,16 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       .then( res => {
         console.log(res);
         if (res.status === 200) {
-          updateValues(initialState)
+          updateValues(initialState) //reset inputs if login was successfull
+          //TODO set username to context, set token in cookies
           alert('login success')
         } else {
+          //TODO alert via a text element
           alert('login failed')
         }
+      })
+      .catch( () => {
+        alert('Request Failed, Server Did Not Respond')
       })
     }
 
