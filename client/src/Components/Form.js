@@ -4,6 +4,8 @@ import Button from './Button'
 import { useTheme} from '../Hooks/ThemeContext';
 import Text from './Text';
 
+import axios from 'axios';
+
 export default function Form(props) { //inputs=Array(of Objs.), title=String, submitFunc=Function
 
 
@@ -14,10 +16,34 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
 
   const [formValues, updateValues] = useState(initialState)
   
-  const buttonOnClick = async () => {
-    updateValues(initialState)
-    const user = await props.submitFunc(formValues)
-    console.log(user);
+  const submitForm = () => {
+    
+    const { endpoint, method, validation } = props.request;
+    
+    console.log(endpoint, method, validation);
+
+    const validationErrors = validation(formValues)
+    if (validationErrors.length !== 0) {
+      //show error messages if there are any
+      console.log(validationErrors);
+    } else {
+      //make request with axios
+      axios({
+        method: method,
+        url: endpoint,
+        data: formValues,
+      })
+      .then( res => {
+        console.log(res);
+        if (res.status === 200) {
+          updateValues(initialState)
+          alert('login success')
+        } else {
+          alert('login failed')
+        }
+      })
+    }
+
   }
 
   const theme = useTheme();
@@ -67,22 +93,33 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
           Array.isArray(props.inputs) 
           ? props.inputs.map( inProps => {
             return (
-              <Input
-                key={inProps.name}
-                value={formValues[inProps.name]}
-                name={inProps.name}
-                ph={inProps.ph}
-                type={inProps.type}
-                style={{...defaultStyles.input, ...inProps.style}}
-                id={inProps.id}
-                onChange={ (e) => {
+              <div
+                key={inProps.name+'Wrapper'}
+              >
+                <Text 
+                  key={inProps.name+'Error'}
+                  text={inProps.name}
+                  tag='h3'
+                  id
+                  style={{color: 'red', fontWeight: 500}}
+                />
+                <Input
+                  key={inProps.name}
+                  value={formValues[inProps.name]}
+                  name={inProps.name}
+                  ph={inProps.ph}
+                  type={inProps.type}
+                  style={{...defaultStyles.input, ...inProps.style}}
+                  id={inProps.id}
+                  onChange={ (e) => {
 
-                  const newValue = e.target.value;
-                  const inputName = e.target.name;
+                    const newValue = e.target.value;
+                    const inputName = e.target.name;
 
-                  updateValues( {...formValues, [inputName]: newValue} )
-                }}
-              />
+                    updateValues( {...formValues, [inputName]: newValue} )
+                  }}
+                />
+              </div>
             )
           })
           : 'Dev Warning! No Inputs, Check Code'
@@ -91,7 +128,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       </form>
       <Button 
         text={props.submitText}
-        onClick={buttonOnClick}
+        onClick={submitForm}
         style={{...defaultStyles.submitBtn}}
       />
   
