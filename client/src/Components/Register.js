@@ -4,7 +4,7 @@ import Form from './Form';
 
 import { useTheme} from '../Hooks/ThemeContext';
 import { regInputs } from '../utils/userInputs';
-import { regReq } from '../utils/userRequests'
+import { register } from '../utils/userRequests'
 import Text from './Text';
 
 export default function Register() {
@@ -24,7 +24,7 @@ export default function Register() {
                 id='registerForm'
                 title='Fill Out The Form And Click Submit'
                 inputs={regInputs}
-                submitFunc={regReq}
+                request={register}
                 submitText='Submit Registration'
             />
 
