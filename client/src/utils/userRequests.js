@@ -4,7 +4,7 @@ const isEmpty = require('./isEmpty');
 
 module.exports = {
   login: {
-    endpoint: baseURL+'/login',
+    endpoint: baseURL+'/user/login',
     method: 'PUT',
     validation: (data) => {
           const failedValues = [];
@@ -54,8 +54,8 @@ module.exports = {
     }
   },
   register: {
-    endpoint: baseURL+'/register',
-    method: 'POST ',
+    endpoint: baseURL+'/user/register',
+    method: 'POST',
     validation: (data) => {
           const failedValues = [];
           for (const key in data) {

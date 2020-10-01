@@ -15,6 +15,8 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
   }, {})
 
   const [formValues, updateValues] = useState(initialState)
+
+  const [requestMessage, setReqMsg] = useState('')
   
   const submitForm = () => {
     
@@ -32,13 +34,13 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
     const errorsObj = validation(formValues) //get form values from state
     
     //check if there are err messages, validation function should return false if there are none
-    console.log(errorsObj);
+    // console.log(errorsObj);
     if (errorsObj) {
       //show error messages if there are any to display
       for (const name in errorsObj) {
         const errorText = document.getElementById(name+'Error')
         errorText.style.display = 'initial'
-        errorText.innerText+=errorsObj[name]
+        errorText.innerText = errorsObj[name]
       }
     } else {
       //make request with axios
@@ -49,17 +51,18 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       })
       .then( res => {
         console.log(res);
-        if (res.status === 200) {
+        if (res.status === 200 || res.status === 201) {
           updateValues(initialState) //reset inputs if login was successfull
           //TODO set username to context, set token in cookies
-          alert('login success')
+          setReqMsg('Request Successful')
         } else {
           //TODO alert via a text element
-          alert('login failed')
+          setReqMsg('Request Failed Error Code: '+res.status)
         }
       })
-      .catch( () => {
-        alert('Request Failed, Server Did Not Respond')
+      .catch( (err) => {
+        console.log(err);
+        setReqMsg('Request Failed')
       })
     }
 
@@ -106,13 +109,18 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
     <div>
       <Text
         style = {{
-          borderRaidus: 15,
           color: !theme ? 'black' : 'white',
         }}
         tag='h1'
         text={props.title}
       />
-      <form 
+      <Text
+        style = {{
+          color: 'lightblue',
+        }}
+        text={requestMessage}
+        tag='h2'
+      />      <form 
         id={props.id}
         style={{...defaultStyles.form, ...props.style, color: 'honeydew'}}
       >
