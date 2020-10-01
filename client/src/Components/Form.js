@@ -3,11 +3,9 @@ import Input from './Input'
 import Button from './Button'
 import { useTheme} from '../Hooks/ThemeContext';
 import Text from './Text';
-
 import axios from 'axios';
 
-export default function Form(props) { //inputs=Array(of Objs.), title=String, submitFunc=Function
-
+export default function Form(props) { //inputs=Array(of Objs.), title=String, id=String, submitText=String, request={method:String,endpoint:String,validation:Function}
 
   const initialState = props.inputs.reduce( (intial, input) => {
     intial[input.name] = ''
@@ -15,9 +13,8 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
   }, {})
 
   const [formValues, updateValues] = useState(initialState)
-
   const [requestMessage, setReqMsg] = useState('')
-  
+
   const submitForm = () => {
     
     const { endpoint, method, validation } = props.request;
@@ -50,19 +47,17 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
         data: formValues,
       })
       .then( res => {
-        console.log(res);
+        // console.log(res);
         if (res.status === 200 || res.status === 201) {
           updateValues(initialState) //reset inputs if login was successfull
           //TODO set username to context, set token in cookies
           setReqMsg('Request Successful')
         } else {
-          //TODO alert via a text element
-          setReqMsg('Request Failed Error Code: '+res.status)
+          setReqMsg('Request Failed')
         }
       })
       .catch( (err) => {
-        console.log(err);
-        setReqMsg('Request Failed')
+        setReqMsg(err.message ||'Request Failed')
       })
     }
 
@@ -100,6 +95,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       backgroundColor: theme ? '#777' : 'deeppink', 
       fontWeight: 500, 
       padding: 3, 
+      margin: 10,
       borderRadius: 10,
       display: 'none'
     }
@@ -116,13 +112,13 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
       />
       <Text
         style = {{
-          color: 'lightblue',
+          color: theme ? 'lightblue' : 'midnightblue',
         }}
         text={requestMessage}
         tag='h2'
       />      <form 
         id={props.id}
-        style={{...defaultStyles.form, ...props.style, color: 'honeydew'}}
+        style={{...defaultStyles.form, ...props.style}}
       >
         {
           Array.isArray(props.inputs) 
@@ -130,6 +126,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, su
             return (
               <div
                 key={inProps.name+'Wrapper'}
+                style={{display:"flex", flexDirection:'column'}}
               >
                 <Text 
                   tag='h3'
