@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useTheme} from '../Hooks/ThemeContext';
 import { loginInputs } from '../utils/userInputs'
-import { loginReq } from '../utils/userRequests'
+import { login } from '../utils/userRequests'
 
 import Button from './Button';
 import Form from './Form';
@@ -29,7 +29,7 @@ export default function Login() {
                 id='loginForm'
                 inputs={loginInputs}
                 title='Login To Your Account'
-                submitFunc={loginReq}
+                request={login}
                 submitText='Submit Login'
             />
 
