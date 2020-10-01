@@ -5,7 +5,7 @@ export default function Text(props) {
 
   const theme = useTheme()
 
-  const TagType = props.tag;
+  const TagType = props.tag || 'p';
   
   const defaultStyle = {
     color: theme ? 'white': 'black',
