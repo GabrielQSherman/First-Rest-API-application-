@@ -37,20 +37,20 @@ module.exports = {
             failedValues.push({key: key, error: `${key} Is Required`})
           }
         }
+        const errorsObj = {};
+
         if (failedValues.length !== 0) {
-          const errorsObj = {};
           //itterate through errors to produce error strings
           failedValues.forEach( err => {
             if (errorsObj.hasOwnProperty(err.key)) {
-              errorsObj[err.key] = `${errorsObj[err.key]} : ${err.error}` 
+              errorsObj[err.key] = `${errorsObj[err.key]}\n${err.error}` 
             } else {
               errorsObj[err.key] = err.error
             }
           });
-          return errorsObj
-        } else {
-          return false
-        }
+        } 
+
+        return errorsObj        
     }
   },
   register: {
@@ -86,8 +86,8 @@ module.exports = {
             failedValues.push({key: key, error: `${key} Is Required`})
           }
         }
+        const errorsObj = {};
         if (failedValues.length !== 0) {
-          const errorsObj = {};
           //itterate through errors to produce error strings
           failedValues.forEach( err => {
             if (errorsObj.hasOwnProperty(err.key)) {
@@ -96,10 +96,8 @@ module.exports = {
               errorsObj[err.key] = err.error
             }
           });
-          return errorsObj
-        } else {
-          return false
         }
+        return errorsObj
     }
   }
 }
