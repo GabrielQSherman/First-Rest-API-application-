@@ -26,7 +26,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
     
     const errorMsgs = validation(formValues);
     
-    console.log(errorMsgs, formErrors);
+    // console.log(errorMsgs, formErrors);
     
     updateErrors({...initialState, ...errorMsgs})
 
@@ -50,14 +50,15 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
         }
 
         //TODO set expires time for cookie that last as long as the JWT
-        document.cookie = `token=${res.data.token};`
+        const expiresTime = (new Date(Date.now+180000)).toUTCString();
+
+        document.cookie = `token=${res.data.token}; expires=${expiresTime}`
 
         //TODO store the username (res.data.username) in a context so it can accessed from any page
         
         //TODO redirect back to home page, also home page should display the user's username if it exist in the user context
 
         //TODO if the user is on the login or register and logged in. dont shows the forms
-
         
       })
       .catch( err => {
@@ -141,7 +142,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
                   // id={inProps.name+'Error'}
                   style={{
                     color: 'red',
-                    display: formErrors[inProps.name] != '' ? 'initial' : 'none',
+                    display: formErrors[inProps.name] !== '' ? 'initial' : 'none',
                   }} //...defaultStyles.inputErr
                   text={formErrors[inProps.name] || ''}
                 />

@@ -15,7 +15,6 @@ export default function Text(props) {
     <TagType
       style = {{...defaultStyle, ...props.style}}
       id={props.id}
-      key={props.key}
     >
       {props.text}
     </TagType>
