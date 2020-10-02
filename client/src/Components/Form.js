@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Input from './Input'
 import Button from './Button'
-import { useTheme} from '../Hooks/ThemeContext';
+import { useTheme } from '../Hooks/ThemeContext';
+import { useUserContext } from '../Hooks/userContext';
 import Text from './Text';
 import axios from 'axios';
 import isEmpty from '../utils/isEmpty';
@@ -16,18 +17,17 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
   const [formValues, updateValues] = useState(initialState)
   const [formErrors, updateErrors] = useState(initialState)
   const [requestMessage, setReqMsg] = useState('')
+  const theme = useTheme();
+  const {user, updateUser} = useUserContext();
 
   const submitForm = () => {
 
     const { endpoint, method, validation } = props.request;
-    // console.log(endpoint, method, validation);
-
+    // console.log(endpoint, method, validation);    
+    
+    const errorMsgs = validation(formValues);  
+    
     //reset errors to default (empty string)
-    
-    const errorMsgs = validation(formValues);
-    
-    // console.log(errorMsgs, formErrors);
-    
     updateErrors({...initialState, ...errorMsgs})
 
     if (isEmpty(errorMsgs)) {
@@ -40,7 +40,7 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
       .then( res => {
         updateValues(initialState)
 
-        console.log(res);
+        // console.log(res);
         if (res.status === 200) {
           setReqMsg('Login Success')
         } else if (res.status === 201) {
@@ -48,18 +48,14 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
         } else {
           setReqMsg('Request Successful')
         }
-
-        //TODO set expires time for cookie that last as long as the JWT
-        const expiresTime = (new Date(Date.now+180000)).toUTCString();
-
-        document.cookie = `token=${res.data.token}; expires=${expiresTime}`
-
-        //TODO store the username (res.data.username) in a context so it can accessed from any page
         
-        //TODO redirect back to home page, also home page should display the user's username if it exist in the user context
+        if (props.id === 'registerForm' || props.id === 'loginForm' ) {
+          const expiresTime = (new Date(Date.now+180000)).toUTCString();
+          document.cookie = `token=${res.data.token}; expires=${expiresTime}`
+          updateUser({...user, username: res.data.username})
+          window.location = window.location.origin
+        }
 
-        //TODO if the user is on the login or register and logged in. dont shows the forms
-        
       })
       .catch( err => {
         // console.log(err);
@@ -70,7 +66,6 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
 
   }
 
-  const theme = useTheme();
 
   const defaultStyles = {
     form: {
