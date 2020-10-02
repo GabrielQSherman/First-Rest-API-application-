@@ -4,6 +4,7 @@ import Button from './Button'
 import { useTheme} from '../Hooks/ThemeContext';
 import Text from './Text';
 import axios from 'axios';
+import isEmpty from '../utils/isEmpty';
 
 export default function Form(props) { //inputs=Array(of Objs.), title=String, id=String, submitText=String, request={method:String,endpoint:String,validation:Function}
 
@@ -13,52 +14,57 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
   }, {})
 
   const [formValues, updateValues] = useState(initialState)
+  const [formErrors, updateErrors] = useState(initialState)
   const [requestMessage, setReqMsg] = useState('')
 
   const submitForm = () => {
-    
+
     const { endpoint, method, validation } = props.request;
     // console.log(endpoint, method, validation);
-    //reset Error messages
-    props.inputs.forEach( input => {
-      const inputElm = document.getElementById(input.name+'Error')
-      // console.log(inputElm);
-      inputElm.style.display = 'none'
-      inputElm.innerText = ''
-    })
 
-    //produce error messages
-    const errorsObj = validation(formValues) //get form values from state
+    //reset errors to default (empty string)
     
-    //check if there are err messages, validation function should return false if there are none
-    // console.log(errorsObj);
-    if (errorsObj) {
-      //show error messages if there are any to display
-      for (const name in errorsObj) {
-        const errorText = document.getElementById(name+'Error')
-        errorText.style.display = 'initial'
-        errorText.innerText = errorsObj[name]
-      }
-    } else {
-      //make request with axios
+    const errorMsgs = validation(formValues);
+    
+    console.log(errorMsgs, formErrors);
+    
+    updateErrors({...initialState, ...errorMsgs})
+
+    if (isEmpty(errorMsgs)) {
+            
       axios({
         method: method,
         url: endpoint,
-        data: formValues,
+        data: formValues
       })
       .then( res => {
-        // console.log(res);
-        if (res.status === 200 || res.status === 201) {
-          updateValues(initialState) //reset inputs if login was successfull
-          //TODO set username to context, set token in cookies
-          setReqMsg('Request Successful')
+        updateValues(initialState)
+
+        console.log(res);
+        if (res.status === 200) {
+          setReqMsg('Login Success')
+        } else if (res.status === 201) {
+          setReqMsg('Account Created Successfully')
         } else {
-          setReqMsg('Request Failed')
+          setReqMsg('Request Successful')
         }
+
+        //TODO set expires time for cookie that last as long as the JWT
+        document.cookie = `token=${res.data.token};`
+
+        //TODO store the username (res.data.username) in a context so it can accessed from any page
+        
+        //TODO redirect back to home page, also home page should display the user's username if it exist in the user context
+
+        //TODO if the user is on the login or register and logged in. dont shows the forms
+
+        
       })
-      .catch( (err) => {
-        setReqMsg(err.message ||'Request Failed')
+      .catch( err => {
+        // console.log(err);
+        setReqMsg(err.message)
       })
+
     }
 
   }
@@ -116,7 +122,8 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
         }}
         text={requestMessage}
         tag='h2'
-      />      <form 
+      />
+      <form 
         id={props.id}
         style={{...defaultStyles.form, ...props.style}}
       >
@@ -131,11 +138,15 @@ export default function Form(props) { //inputs=Array(of Objs.), title=String, id
                 <Text 
                   tag='h3'
                   key={inProps.name+'Error'}
-                  id={inProps.name+'Error'}
-                  style={{...defaultStyles.inputErr}}
+                  // id={inProps.name+'Error'}
+                  style={{
+                    color: 'red',
+                    display: formErrors[inProps.name] != '' ? 'initial' : 'none',
+                  }} //...defaultStyles.inputErr
+                  text={formErrors[inProps.name] || ''}
                 />
                 <Input
-                  key={inProps.name}
+                  key={inProps.name+'Input'}
                   value={formValues[inProps.name]}
                   name={inProps.name}
                   ph={inProps.ph}
