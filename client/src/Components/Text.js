@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTheme} from '../Hooks/ThemeContext';
+import { useTheme } from '../Hooks/ThemeContext';
 
 export default function Text(props) {
 
@@ -14,7 +14,8 @@ export default function Text(props) {
   return (
     <TagType
       style = {{...defaultStyle, ...props.style}}
-      id= {props.id}
+      id={props.id}
+      key={props.key}
     >
       {props.text}
     </TagType>
